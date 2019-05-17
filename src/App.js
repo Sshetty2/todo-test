@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
+import {add_new_user} from './thunks/add_new_user';
+
 import logo from './logo.svg';
 import './App.css';
 
-const App = () => {
+const App = ({add_new_user}) => {
 	const [users, setusers] = useState([]);
 
 	useEffect(() => {
@@ -26,9 +29,19 @@ const App = () => {
 				<a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
 					Learn React
 				</a>
+				<button
+					onClick={() => add_new_user('testconnect3', 'testconnect500@gmail.com', 'testpwhash43')}
+				/>
 			</header>
 		</div>
 	);
 };
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+	add_new_user: (userid, email, pw_hash) => dispatch(add_new_user(userid, email, pw_hash))
+});
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(App);
